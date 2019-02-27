@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %} {% block head %} {{ parent() }}
+<script>
+    tinymce.init({
+        selector: 'textarea'
+    });
+
+</script>
+{% endblock %} {% block content %}
+
+<div class="container">
+
+
+    <h1> {{ evenement.nom }}</h1>
+
+    <form method="post" action="/updateEvenement/{{evenement.id}}">
+        <div class="form-group">
+            <label for="nom"> Nom </label>
+            <input class="form-control" name="nom" id="nom" value="{{evenement.nom}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="date_creation"> Date de création </label>
+            <input class="form-control" name="date_creation" id="date_creation" type="date" value="{{evenement.dateCreation}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="lieu"> Lieu </label>
+            <input class="form-control" name="lieu" id="lieu" value="{{evenement.lieu}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="date_debut"> date de début </label>
+            <input class="form-control" name="date_debut" id="date_debut" type="date" value="{{evenement.dateDebut | date('Y-m-d')}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="date_fin"> date de fin </label>
+            <input class="form-control" name="date_fin" id="date_fin" type="date" value="{{evenement.dateFin | date('Y-m-d')}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="content">Détails de l'événement</label>
+            <textarea class="form-control" name="content" id="content"></textarea>
+        </div>
+
+ <div class="form-group">
+            <label for="doc">Documents à joindre</label>
+            <input class="form-control" name="doc" id="doc" type="file">
+        </div>
+
+        <button type="submit">Valider</button>
+    </form>
+
+
+</div>
+<script>
+    tinymce.init({
+        selector: 'textarea'
+    });
+
+</script>
+{% endblock %}

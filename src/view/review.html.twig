@@ -1,0 +1,13 @@
+ {% extends 'base.html.twig' %} {% block content %}
+<h1>Bilan du stage {{ evenement.nom }}
+</h1>
+<form method="post" action="/evenements/{{ evenement.id }}/review">
+    <input name="first_name" />
+    <input name="last_name" />
+    <label for="content">Votre avis en quelques lignes</label>
+    <textarea name="content" rows="3"></textarea>
+
+    <button type="submit">Envoyer</button>
+</form>
+
+{% endblock %}

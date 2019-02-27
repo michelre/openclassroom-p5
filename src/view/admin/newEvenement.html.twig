@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %} {% block content %}
+
+<div class="container">
+
+    <h1>Nouvel évènement</h1>
+    <form method="post" action="/newEvenement" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="nom"> Nom </label>
+            <input class="form-control" name="nom" id="nom" />
+        </div>
+
+        <div class="form-group">
+            <label for="date_creation"> Date de création </label>
+            <input class="form-control" name="date_creation" id="date_creation" type="date" />
+        </div>
+
+        <div class="form-group">
+            <label for="lieu"> Lieu </label>
+            <input class="form-control" name="lieu" id="lieu" />
+        </div>
+
+        <div class="form-group">
+            <label for="date_debut"> date de début </label>
+            <input class="form-control" name="date_debut" id="date_debut" type="date" />
+        </div>
+
+        <div class="form-group">
+            <label for="date_fin"> date de fin </label>
+            <input class="form-control" name="date_fin" id="date_fin" type="date" />
+        </div>
+
+        <div class="form-group">
+            <label for="content">Détails de l'événement</label>
+            <textarea class="form-control" name="content" id="content"></textarea>
+        </div>
+        
+          <div class="form-group">
+            <label for="doc">Documents à joindre</label>
+            <input class="form-control" name="doc" id="doc" type="file">
+        </div>
+
+
+        <button type="submit">Créer</button>
+    </form>
+
+</div>
+<script>
+    tinymce.init({
+        selector: 'textarea'
+    });
+
+</script>
+{% endblock %}

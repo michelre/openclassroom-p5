@@ -1,0 +1,8 @@
+.action {
+    display: flex;
+}
+
+.btn {
+    justify-content: space-around;
+
+}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %} {% block content %}
+
+<div class="container">
+
+    <h1>Liste des participants</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom </th>
+                <th> date_naissance </th>
+                <th> sexe </th>
+                <th> telephone </th>
+                <th> mail </th>
+                <th> profession </th>
+                <th> lieu_travail </th>
+                <th> action </th>
+            </tr>
+
+        </thead>
+        {% for participant in participants %}
+        <tbody>
+
+            <tr>
+                <td>{{ participant.nom}} </td>
+                <td> {{ participant.dateNaissance}}</td>
+                <td> {{ participant.sexe}}</td>
+                <td> {{ participant.telephone}}</td>
+                <td> {{ participant.mail}}</td>
+                <td> {{ participant.profession}}</td>
+                <td> {{ participant.lieuTravail}}</td>
+
+                <td>
+                    <a href="/updateParticipant/{{participant.id}}?evenementId={{evenementId}}" class="btn btn-primary">Modifier</a>
+                    <form action="/deleteParticipant/{{evenementId}}/{{participant.id}}" method="post">
+                        <button type="submit" class="btn btn-danger mb-2"> Supprimer</button></form>
+                </td>
+
+            </tr>
+
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

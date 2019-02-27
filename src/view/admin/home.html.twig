@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %} {% block content %}
+
+
+
+
+<h1>Admin Home</h1>
+<a href="/logout">Se déconnecter</a>
+
+
+<div class="action">
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Présentation</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evenement in evenements %}
+            <tr>
+
+                <td>{{ evenement.nom}}</td>
+                <td>
+                    <b>{{ evenement.lieu}}</b>
+                    <div>Du {{ evenement.dateDebut | date('d/m/Y')}} au {{ evenement.dateFin | date('d/m/Y')}}</div>
+                </td>
+
+                <td> <a href="/updateEvenement/{{evenement.id}}" class="btn btn-primary mb-2">Modifier</a>
+                    <form action="/deleteEvenement/{{evenement.id}}" method="post">
+
+                        <button type="submit" class="btn btn-danger mb-2"> Supprimer</button></form>
+                    <a href="/participants/{{evenement.id}}" class="btn btn-warning">Participants</a> {% endfor %}</td>
+
+
+            </tr>
+
+        </tbody>
+
+    </table>
+</div>
+
+
+<a href="/newEvenement" class="btn btn-success">Ajouter un événement</a> {% endblock %}
