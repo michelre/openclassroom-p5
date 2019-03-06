@@ -79,9 +79,12 @@ class BackendController
         }
 
         $file = $files->get("doc");
-        $extension = $this->fileService->getExtension($file['type']);
-        $filename = '/uploads/' . uniqid() . $extension;
-        move_uploaded_file($file['tmp_name'], __DIR__ . '/..' . $filename);
+        $filename = null;
+        if($file['size'] > 0){
+            $extension = $this->fileService->getExtension($file['type']);
+            $filename = '/uploads/' . uniqid() . $extension;
+            move_uploaded_file($file['tmp_name'], __DIR__ . '/..' . $filename);
+        }
         $evenement = new Evenement();
         $evenement->setNom($formData->get("nom"));
         $evenement->setLieu($formData->get("lieu"));
@@ -114,18 +117,28 @@ class BackendController
     }
 
     public function updateEvenement($id, $formData, $files)
-
     {
-        $file = $files->get("doc");
-        move_uploaded_file($file['tmp_name'], __DIR__ . '/../uploads/' . uniqid() . '.pdf');
-        die();
         $userId = $this->authenticationService->getConnectedUser();
         if (!$userId) {
             header('Location: /login');
             die();
         }
+        /** @var Evenement $evenement */
+        $evenement = $this->evenementDao->findById($id);
 
-        $evenement = new Evenement();
+        // On supprime le fichier
+        $doc = $evenement->getDoc();
+        if(isset($doc)){
+            $filePath = getcwd() . '/src' . $evenement->getDoc();
+            unlink($filePath);
+        }
+
+        // On ajoute le nouveau fichier
+        $file = $files->get("doc");
+        $extension = $this->fileService->getExtension($file['type']);
+        $filename = '/uploads/' . uniqid() . $extension;
+        move_uploaded_file($file['tmp_name'], __DIR__ . '/..' . $filename);
+
         $evenement->setId($id);
         $evenement->setNom($formData->get("nom"));
         $evenement->setLieu($formData->get("lieu"));
@@ -133,7 +146,7 @@ class BackendController
         $evenement->setDateDebut($formData->get('date_debut'));
         $evenement->setDateFin($formData->get('date_fin'));
         $evenement->setContent($formData->get('content'));
-        $evenement->setDocument($files->get('document'));
+        $evenement->setDoc($filename);
         $this->evenementDao->update($evenement);
         header("Location: /admin");
         die();
@@ -148,9 +161,14 @@ class BackendController
             header('Location: /login');
             die();
         }
-
-        $evenement = $this->evenementDao->delete($evenementId);
-
+        /** @var Evenement $evenement */
+        $evenement = $this->evenementDao->findById($evenementId);
+        $doc = $evenement->getDoc();
+        if(isset($doc)){
+            $filePath = getcwd() . '/src' . $evenement->getDoc();
+            unlink($filePath);
+        }
+        $this->evenementDao->delete($evenementId);
 
         header("Location: /admin");
         die();

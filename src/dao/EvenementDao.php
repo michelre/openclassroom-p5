@@ -112,8 +112,8 @@ WHERE e.id=?");
             $evenement->getDateDebut(),
             $evenement->getDateFin(),
             $evenement->getContent(),
-            $evenement->getId(),
             $evenement->getDoc(),
+            $evenement->getId(),
         ]);
 
         var_dump($query->errorInfo());
@@ -122,12 +122,13 @@ WHERE e.id=?");
     }
 
     public function delete($evenementId)
-
     {
 
-        $query = $this->db->prepare("delete from evenement where id=? ");
+        $query = $this->db->prepare("delete from evenement where id=?");
+        $queryParticipants = $this->db->prepare("delete from evenement_participant where evenement_id=?");
 
-        return $query->execute(array($evenementId));
+        $query->execute(array($evenementId));
+        $queryParticipants->execute(array($evenementId));
 
     }
 
