@@ -17,7 +17,7 @@ class BaseDao{
 
 
         try {
-            $this->db = new PDO("mysql:dbname=".db_name.";host=".db_host.";port=8889", db_user, db_password);
+            $this->db = new PDO("mysql:dbname=".db_name.";host=".db_host.";port=" . db_port, db_user, db_password);
 
 
 
